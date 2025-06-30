@@ -1,0 +1,567 @@
+{
+  "author": "",
+  "category": "Game mechanic",
+  "extensionNamespace": "",
+  "fullName": "Softbody2D",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "",
+  "name": "Softbody2D",
+  "previewIconUrl": "",
+  "shortDescription": "Simple simulation of 2d wireframe softbodies",
+  "version": "0.1.0",
+  "description": [
+    "Simple simulation of 2d wireframe softbodies",
+    "",
+    "> It's very early in development, so most things haven't been added yet.",
+    "> Very buggy"
+  ],
+  "tags": [
+    "physics",
+    "2d",
+    "soft",
+    "softbodies",
+    "softbody"
+  ],
+  "authorIds": [
+    "RSeNCxLJD2N3iBVerJci9hztlNp2"
+  ],
+  "dependencies": [],
+  "globalVariables": [],
+  "sceneVariables": [
+    {
+      "name": "softbodies",
+      "type": "array",
+      "children": [
+        {
+          "type": "structure",
+          "children": [
+            {
+              "name": "ID",
+              "type": "string",
+              "value": "ID"
+            },
+            {
+              "name": "points",
+              "type": "array",
+              "children": [
+                {
+                  "type": "array",
+                  "children": [
+                    {
+                      "type": "number",
+                      "value": 0
+                    },
+                    {
+                      "type": "number",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "folded": true,
+                  "type": "array",
+                  "children": [
+                    {
+                      "type": "number",
+                      "value": 100
+                    },
+                    {
+                      "type": "number",
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "folded": true,
+                  "type": "array",
+                  "children": [
+                    {
+                      "type": "number",
+                      "value": 100
+                    },
+                    {
+                      "type": "number",
+                      "value": 100
+                    }
+                  ]
+                },
+                {
+                  "folded": true,
+                  "type": "array",
+                  "children": [
+                    {
+                      "type": "number",
+                      "value": 0
+                    },
+                    {
+                      "type": "number",
+                      "value": 100
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "x",
+              "type": "number",
+              "value": 0
+            },
+            {
+              "name": "y",
+              "type": "number",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "x",
+      "type": "number",
+      "value": -1
+    }
+  ],
+  "eventsFunctions": [
+    {
+      "fullName": "",
+      "functionType": "Action",
+      "name": "CreateSoftbody",
+      "sentence": "Create softbody with ID _PARAM1_ at _PARAM2_;_PARAM3_ (layer: _PARAM4_) _PARAM5_ with 4 points",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "Create"
+              },
+              "parameters": [
+                "",
+                "object",
+                "0",
+                "0",
+                "layer"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": [],
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::ForEachChildVariable",
+              "iterableVariableName": "softbodies[0].points",
+              "valueIteratorVariableName": "child",
+              "keyIteratorVariableName": "i",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "value": "PrimitiveDrawing::LineV2"
+                  },
+                  "parameters": [
+                    "object",
+                    "softbodies[0].points[i][0]\n",
+                    "softbodies[0].points[i][1]",
+                    "softbodies[0].points[mod(i + 1, VariableChildCount(softbodies[0].points))][0]",
+                    "softbodies[0].points[mod(i + 1, VariableChildCount(softbodies[0].points))][1]",
+                    "5"
+                  ]
+                }
+              ],
+              "events": [
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "softbodies[0].points[i][0]",
+                        "+",
+                        "softbodies[0].x"
+                      ]
+                    },
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "softbodies[0].points[i][1]",
+                        "+",
+                        "softbodies[0].y"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "MouseButtonFromTextPressed"
+                      },
+                      "parameters": [
+                        "",
+                        "\"Left\""
+                      ]
+                    },
+                    {
+                      "type": {
+                        "value": "BuiltinCommonInstructions::CompareNumbers"
+                      },
+                      "parameters": [
+                        "DistanceBetweenPositions(CursorX(),CursorY(),softbodies[0].points[i][0],softbodies[0].points[i][1])",
+                        "<=",
+                        "10"
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "x",
+                        "=",
+                        "i"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "MouseButtonFromTextReleased"
+                      },
+                      "parameters": [
+                        "",
+                        "\"Left\""
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "x",
+                        "=",
+                        "-1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [
+                    {
+                      "type": {
+                        "value": "NumberVariable"
+                      },
+                      "parameters": [
+                        "i",
+                        "=",
+                        "x"
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "softbodies[0].points[i][0]",
+                        "=",
+                        "CursorX()"
+                      ]
+                    },
+                    {
+                      "type": {
+                        "value": "SetNumberVariable"
+                      },
+                      "parameters": [
+                        "softbodies[0].points[i][1]",
+                        "=",
+                        "CursorY()"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "BuiltinCommonInstructions::ForEachChildVariable",
+                  "iterableVariableName": "softbodies[0].points",
+                  "valueIteratorVariableName": "child",
+                  "keyIteratorVariableName": "j",
+                  "conditions": [],
+                  "actions": [],
+                  "events": [
+                    {
+                      "type": "BuiltinCommonInstructions::Standard",
+                      "conditions": [
+                        {
+                          "type": {
+                            "value": "BuiltinCommonInstructions::CompareNumbers"
+                          },
+                          "parameters": [
+                            "DistanceBetweenPositions(softbodies[0].points[j][0],softbodies[0].points[j][1],softbodies[0].points[i][0],softbodies[0].points[i][1])",
+                            "<",
+                            "100"
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": {
+                            "value": "SetNumberVariable"
+                          },
+                          "parameters": [
+                            "softbodies[0].points[j][0]",
+                            "-",
+                            "(softbodies[0].points[i][0]-softbodies[0].points[j][0])*TimeDelta()"
+                          ]
+                        },
+                        {
+                          "type": {
+                            "value": "SetNumberVariable"
+                          },
+                          "parameters": [
+                            "softbodies[0].points[j][1]",
+                            "-",
+                            "(softbodies[0].points[i][1]-softbodies[0].points[j][1])*TimeDelta()"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BuiltinCommonInstructions::Standard",
+                      "conditions": [
+                        {
+                          "type": {
+                            "value": "BuiltinCommonInstructions::CompareNumbers"
+                          },
+                          "parameters": [
+                            "DistanceBetweenPositions(softbodies[0].points[j][0],softbodies[0].points[j][1],softbodies[0].points[i][0],softbodies[0].points[i][1])",
+                            ">",
+                            "110"
+                          ]
+                        }
+                      ],
+                      "actions": [],
+                      "events": [
+                        {
+                          "type": "BuiltinCommonInstructions::Standard",
+                          "conditions": [
+                            {
+                              "type": {
+                                "value": "BuiltinCommonInstructions::Or"
+                              },
+                              "parameters": [],
+                              "subInstructions": [
+                                {
+                                  "type": {
+                                    "value": "NumberVariable"
+                                  },
+                                  "parameters": [
+                                    "softbodies[0].points[j][0]",
+                                    "<",
+                                    "CursorX()-20"
+                                  ]
+                                },
+                                {
+                                  "type": {
+                                    "value": "NumberVariable"
+                                  },
+                                  "parameters": [
+                                    "softbodies[0].points[j][0]",
+                                    ">",
+                                    "CursorX()+20"
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": {
+                                "value": "SetNumberVariable"
+                              },
+                              "parameters": [
+                                "softbodies[0].points[j][0]",
+                                "+",
+                                "(softbodies[0].points[i][0]-softbodies[0].points[j][0])*TimeDelta()"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "BuiltinCommonInstructions::Standard",
+                          "conditions": [
+                            {
+                              "type": {
+                                "value": "BuiltinCommonInstructions::Or"
+                              },
+                              "parameters": [],
+                              "subInstructions": [
+                                {
+                                  "type": {
+                                    "value": "NumberVariable"
+                                  },
+                                  "parameters": [
+                                    "softbodies[0].points[j][1]",
+                                    "<",
+                                    "CursorY()-20"
+                                  ]
+                                },
+                                {
+                                  "type": {
+                                    "value": "NumberVariable"
+                                  },
+                                  "parameters": [
+                                    "softbodies[0].points[j][1]",
+                                    ">",
+                                    "CursorY()+20"
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": {
+                                "value": "SetNumberVariable"
+                              },
+                              "parameters": [
+                                "softbodies[0].points[j][1]",
+                                "+",
+                                "(softbodies[0].points[i][1]-softbodies[0].points[j][1])*TimeDelta()"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BuiltinCommonInstructions::Standard",
+                      "conditions": [
+                        {
+                          "type": {
+                            "value": "NumberVariable"
+                          },
+                          "parameters": [
+                            "softbodies[0].points[j][1]",
+                            ">=",
+                            "100"
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": {
+                            "value": "SetNumberVariable"
+                          },
+                          "parameters": [
+                            "softbodies[0].points[j][1]",
+                            "=",
+                            "100"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "variables": [
+            {
+              "name": "i",
+              "type": "number",
+              "value": 0
+            },
+            {
+              "name": "j",
+              "type": "number",
+              "value": 0
+            },
+            {
+              "name": "k",
+              "type": "number",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": [
+            {
+              "type": {
+                "value": "SetNumberVariable"
+              },
+              "parameters": [
+                "softbodies[0].y",
+                "=",
+                "10*TimeDelta()"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "description": "",
+          "name": "ID",
+          "type": "string"
+        },
+        {
+          "description": "",
+          "name": "x1",
+          "type": "expression"
+        },
+        {
+          "description": "",
+          "name": "y1",
+          "type": "expression"
+        },
+        {
+          "description": "",
+          "name": "layer",
+          "type": "layer"
+        },
+        {
+          "description": "",
+          "name": "object",
+          "supplementaryInformation": "PrimitiveDrawing::Drawer",
+          "type": "objectList"
+        },
+        {
+          "description": "",
+          "name": "points",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}
