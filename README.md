@@ -1,6 +1,8 @@
 # Softbody2D
 Extension for Gdevelop 5.5 that adds 2d softbodies
 
+~~this entire thing is extremely unfinished and broken, I might update it later but yeah. not very usable rn~~
+
 ## Features
 
 > (action): Create softbody
