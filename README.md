@@ -1,7 +1,7 @@
 # Softbody2D
 Extension for Gdevelop 5.5 that adds 2d softbodies
 
-~~This extension is not finished, and neither does it completely work right now [but that will hopefully change in the future]~~
+~~This extension is not finished, and neither does it completely work right now~~
 
 ## Features
 
